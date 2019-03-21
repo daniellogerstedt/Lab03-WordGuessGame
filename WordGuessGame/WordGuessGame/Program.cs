@@ -49,6 +49,11 @@ namespace WordGuessGame
             }
         }
 
+        /// <summary>
+        /// Deletes a word from the file containing words for the game.
+        /// </summary>
+        /// <param name="path">Path of the file full of words.</param>
+        /// <param name="word">The word to be deleted.</param>
         static void DeleteWord(string path, string word)
         {
             try
