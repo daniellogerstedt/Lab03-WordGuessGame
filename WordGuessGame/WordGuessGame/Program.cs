@@ -48,5 +48,28 @@ namespace WordGuessGame
                 Console.Error.WriteLine(e.Message);
             }
         }
+
+        static void DeleteWord(string path, string word)
+        {
+            try
+            {
+                string[] words = System.IO.File.ReadAllLines(path);
+                string[] newWords = new string[words.Length - 1];
+                for (int i = 0, j = 0; i < newWords.Length; i++)
+                {
+                    if (!words[i].Equals(word))
+                    {
+                        newWords[j] = words[i];
+                        j++;
+                    }
+                }
+                System.IO.File.WriteAllLines(path, newWords);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+        }
+
     }
 }
