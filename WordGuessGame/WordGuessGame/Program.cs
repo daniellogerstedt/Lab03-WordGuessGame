@@ -30,5 +30,23 @@ namespace WordGuessGame
                 return "Surprise";
             }
         }
+
+        /// <summary>
+        /// Posts a word to the file storing all words for the game.
+        /// </summary>
+        /// <param name="path">Path of the file to write to.</param>
+        /// <param name="word">Word to be added to the file.</param>
+        static void PostWord(string path, string word)
+        {
+            try
+            {
+                string[] wordsToAdd = { word };
+                System.IO.File.AppendAllLines(path, wordsToAdd);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+            }
+        }
     }
 }
