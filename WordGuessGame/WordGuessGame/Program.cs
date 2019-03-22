@@ -11,7 +11,13 @@ namespace WordGuessGame
             while (!exit)
             {
                 string choice = Menu();
-                if (choice.Equals("1")) PlayGame(path);
+                if (choice.Equals("1"))
+                {
+                    string word = PlayGame(path);
+                    Console.WriteLine();
+                    Console.WriteLine($"Congrats you won the game by correctly guessing that the word was {word}");
+                    Console.WriteLine();
+                }
                 else if (choice.Equals("2")) OptionMenu(path);
                 else
                 {
@@ -65,7 +71,7 @@ namespace WordGuessGame
         /// Handles logic for playing the game, including guessing letters and displaying the information for guesses and the word.
         /// </summary>
         /// <param name="path">Requires the path for the file to get words from.</param>
-        static void PlayGame(string path)
+        static string PlayGame(string path)
         {
             string word = GetWord(path);
             char[] wordArray = word.ToCharArray();
@@ -103,6 +109,7 @@ namespace WordGuessGame
                     incorrect += $" {guess}";
                 }
             }
+            return word;
         }
 
         /// <summary>
