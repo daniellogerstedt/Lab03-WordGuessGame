@@ -1,5 +1,5 @@
 
-# About Me Quiz
+# Word Guessing Game
 #### Lab03-WordGuessingGame
 ##### Author: Daniel Logerstedt
 
