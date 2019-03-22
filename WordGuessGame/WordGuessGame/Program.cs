@@ -2,7 +2,7 @@
 
 namespace WordGuessGame
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -70,15 +70,14 @@ namespace WordGuessGame
             string word = GetWord(path);
             char[] wordArray = word.ToCharArray();
             char[] guessArray = new char[wordArray.Length];
-            bool endGame = false;
+            bool letter = false;
             string incorrect = "";
             string correct = "";
             for (int i = 0; i < wordArray.Length; i++)
             {
                 guessArray[i] = '_';
             }
-
-            while (!endGame)
+            while (!(new string(wordArray).Equals(new string(guessArray))))
             {
                 Console.WriteLine($"The word is {wordArray.Length} letters long");
                 Console.WriteLine($"You have incorrectly guessed: {incorrect}");
@@ -90,21 +89,12 @@ namespace WordGuessGame
                 Console.WriteLine();
                 string guess = Console.ReadLine();
                 char[] input = guess.ToCharArray();
-                bool isLetter = false;
+                letter = false;
                 if (input.Length == 1)
                 {
-                    endGame = true;
-                    for (int i = 0; i < wordArray.Length; i++)
-                    {
-                        if (wordArray[i].Equals(input[0].ToString().ToLower()))
-                        {
-                            guessArray[i] = input[0];
-                            isLetter = true;
-                        }
-                        if (guessArray[i].Equals('_')) endGame = false;
-                    }
-                }
-                if (isLetter)
+                    letter = CheckLetter(input, wordArray, guessArray);
+                } 
+                if (letter)
                 {
                     correct += $" {guess}";
                 }
@@ -113,6 +103,27 @@ namespace WordGuessGame
                     incorrect += $" {guess}";
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks the word for the guessed letter and changes the guess array if the letter is found. Also returns whether it was a letter or not as a boolean.
+        /// </summary>
+        /// <param name="input">The guessed letter.</param>
+        /// <param name="wordArray">The array containing the word</param>
+        /// <param name="guessArray">The array containing the guessed portions of the word</param>
+        /// <returns>Whether it was a letter in the word or not.</returns>
+        public static bool CheckLetter(char[] input, char[] wordArray, char[] guessArray)
+        {
+            bool letter = false;
+            for (int i = 0; i < wordArray.Length; i++)
+            {
+                if (wordArray[i].ToString().ToLower().Equals(input[0].ToString().ToLower()))
+                {
+                    guessArray[i] = input[0];
+                    letter = true;
+                }
+            }
+            return letter;
         }
 
         /// <summary>
@@ -208,7 +219,7 @@ namespace WordGuessGame
         /// </summary>
         /// <param name="path">Path of the file to write to.</param>
         /// <param name="word">Word to be added to the file.</param>
-        static void PostWord(string path, string word)
+        public static void PostWord(string path, string word)
         {
             try
             {
@@ -226,7 +237,7 @@ namespace WordGuessGame
         /// </summary>
         /// <param name="path">Path of the file full of words.</param>
         /// <param name="word">The word to be deleted.</param>
-        static void DeleteWord(string path, string word)
+        public static void DeleteWord(string path, string word)
         {
             try
             {
@@ -243,7 +254,6 @@ namespace WordGuessGame
                         j++;
                     }
                 }
-                if (!words[newWords.Length].Equals(newWords[newWords.Length - 1]))
                 System.IO.File.WriteAllLines(path, newWords);
             }
             catch (Exception e)
