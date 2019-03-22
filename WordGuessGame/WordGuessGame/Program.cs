@@ -161,6 +161,22 @@ namespace WordGuessGame
         }
 
 
+        /// <summary>
+        /// This method reads the words file and displays all available words.
+        /// </summary>
+        /// <param name="path">The path to the file of words</param>
+        static void ViewWords(string path)
+        {
+            string[] words = System.IO.File.ReadAllLines(path);
+            Console.WriteLine();
+            Console.WriteLine("The current words that are available are:");
+            Console.WriteLine();
+            for (int i = 0; i < words.Length; i++)
+            {
+                Console.WriteLine(words[i]);
+            }
+            Console.WriteLine();
+        }
 
         /// <summary>
         /// Reads in the file of words and gets a single word returning it. If the file fails to read it writes the error to the console and just returns the word "Surprise"
