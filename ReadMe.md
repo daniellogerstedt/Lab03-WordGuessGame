@@ -32,13 +32,13 @@ Select ```Debug``` -> ```Run without Debugging```
 ## Visuals
 
 ##### Application Start
-![Application Start Image]("./assets/programstart.PNG")
+![Application Start Image](./assets/programstart.PNG)
 ##### Using the Application
-![Options Menu In Use Image]("./assets/optionsinuse.PNG")
-![Adding A Word]("./assets/addingaword.PNG")
-![Play Game In Use Image]("./assets/playingthegame.PNG")
+![Options Menu In Use Image](./assets/optionsinuse.PNG)
+![Adding A Word](./assets/addingaword.PNG)
+![Play Game In Use Image](./assets/playingthegame.PNG)
 ##### Application End
-![Application End Image]("./assets/programend.PNG")
+![Application End Image](./assets/programend.PNG)
 
 ------------------------------
 
