@@ -6,7 +6,7 @@ namespace WordGuessGame
     {
         static void Main(string[] args)
         {
-            const string path = "./assets/words.txt";
+            const string path = "./words.txt";
             bool exit = false;
             while (!exit)
             {
@@ -68,14 +68,14 @@ namespace WordGuessGame
         static void PlayGame(string path)
         {
             string word = GetWord(path);
-            string[] wordArray = word.Split("");
-            string[] guessArray = new string[wordArray.Length];
+            char[] wordArray = word.ToCharArray();
+            char[] guessArray = new char[wordArray.Length];
             bool endGame = false;
             string incorrect = "";
             string correct = "";
             for (int i = 0; i < wordArray.Length; i++)
             {
-                guessArray[i] = "_";
+                guessArray[i] = '_';
             }
 
             while (!endGame)
@@ -88,25 +88,29 @@ namespace WordGuessGame
                 Console.WriteLine();
                 Console.WriteLine("What is your next guess?");
                 Console.WriteLine();
-                string input = Console.ReadLine();
+                string guess = Console.ReadLine();
+                char[] input = guess.ToCharArray();
                 bool isLetter = false;
-                endGame = true;
-                for (int i = 0; i < wordArray.Length; i++)
+                if (input.Length == 1)
                 {
-                    if (wordArray[i].Equals(input))
+                    endGame = true;
+                    for (int i = 0; i < wordArray.Length; i++)
                     {
-                        guessArray[i] = input;
-                        isLetter = true;
+                        if (wordArray[i].Equals(input[0]))
+                        {
+                            guessArray[i] = input[0];
+                            isLetter = true;
+                        }
+                        if (guessArray[i].Equals("_")) endGame = false;
                     }
-                    if (guessArray[i].Equals("_")) endGame = false;
                 }
                 if (isLetter)
                 {
-                    correct += $" {input}";
+                    correct += $" {guess}";
                 }
                 else
                 {
-                    incorrect += $" {input}";
+                    incorrect += $" {guess}";
                 }
             }
         }
