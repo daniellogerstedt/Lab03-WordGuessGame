@@ -96,12 +96,12 @@ namespace WordGuessGame
                     endGame = true;
                     for (int i = 0; i < wordArray.Length; i++)
                     {
-                        if (wordArray[i].Equals(input[0]))
+                        if (wordArray[i].Equals(input[0].ToString().ToLower()))
                         {
                             guessArray[i] = input[0];
                             isLetter = true;
                         }
-                        if (guessArray[i].Equals("_")) endGame = false;
+                        if (guessArray[i].Equals('_')) endGame = false;
                     }
                 }
                 if (isLetter)
