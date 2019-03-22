@@ -9,6 +9,48 @@ namespace WordGuessGame
             
         }
 
+        /// <summary>
+        /// Displays the main menu and waits for user input.
+        /// </summary>
+        /// <returns>Returns the users choice from the menu options</returns>
+        static string Menu()
+        {
+            string choice;
+            while (true)
+            {
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine();
+                Console.WriteLine("1. Play Game");
+                Console.WriteLine();
+                Console.WriteLine("2. Options");
+                Console.WriteLine();
+                Console.WriteLine("3. Exit");
+                Console.WriteLine();
+                choice = Console.ReadLine();
+                if (choice.Equals("1") || choice.Equals("2"))
+                {
+                    return choice;
+                }
+                else if (choice.Equals("3"))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("You've selected exit, are you sure you would like to exit? Y/N");
+                    Console.WriteLine();
+                    choice = Console.ReadLine();
+                    if (choice.Equals("Y") || choice.Equals("y")) return "3";
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"{choice} is not a valid input, please select from the menu (ex: '1' to play)");
+                    Console.WriteLine();
+                }
+            }
+        }
+
+
+
+
 
         /// <summary>
         /// Reads in the file of words and gets a single word returning it. If the file fails to read it writes the error to the console and just returns the word "Surprise"
