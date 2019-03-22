@@ -6,6 +6,19 @@ namespace WordGuessGame
     {
         static void Main(string[] args)
         {
+            const string path = "./assets/words.txt";
+            bool exit = false;
+            while (!exit)
+            {
+                string choice = Menu();
+                if (choice.Equals("1")) PlayGame(path);
+                else if (choice.Equals("2")) OptionMenu(path);
+                else
+                {
+                    Console.WriteLine("Thank you for playing, goodbye!");
+                    exit = true;
+                }
+            }
             
         }
 
@@ -48,7 +61,104 @@ namespace WordGuessGame
             }
         }
 
+        /// <summary>
+        /// Handles logic for playing the game, including guessing letters and displaying the information for guesses and the word.
+        /// </summary>
+        /// <param name="path">Requires the path for the file to get words from.</param>
+        static void PlayGame(string path)
+        {
+            string word = GetWord(path);
+            string[] wordArray = word.Split("");
+            string[] guessArray = new string[wordArray.Length];
+            bool endGame = false;
+            string incorrect = "";
+            string correct = "";
+            for (int i = 0; i < wordArray.Length; i++)
+            {
+                guessArray[i] = "_";
+            }
 
+            while (!endGame)
+            {
+                Console.WriteLine($"The word is {wordArray.Length} letters long");
+                Console.WriteLine($"You have incorrectly guessed: {incorrect}");
+                Console.WriteLine($"And correctly guessed: {correct}");
+                Console.WriteLine();
+                Console.WriteLine($"The Word Is: {String.Join(" ", guessArray)}");
+                Console.WriteLine();
+                Console.WriteLine("What is your next guess?");
+                Console.WriteLine();
+                string input = Console.ReadLine();
+                bool isLetter = false;
+                endGame = true;
+                for (int i = 0; i < wordArray.Length; i++)
+                {
+                    if (wordArray[i].Equals(input))
+                    {
+                        guessArray[i] = input;
+                        isLetter = true;
+                    }
+                    if (guessArray[i].Equals("_")) endGame = false;
+                }
+                if (isLetter)
+                {
+                    correct += $" {input}";
+                }
+                else
+                {
+                    incorrect += $" {input}";
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method handles the options menu, including use of the add and delete methods for words.
+        /// </summary>
+        /// <param name="path">This is the path to the file containing words.</param>
+        static void OptionMenu(string path)
+        {
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Please choose an option");
+                Console.WriteLine();
+                Console.WriteLine("1. View Words");
+                Console.WriteLine();
+                Console.WriteLine("2. Add Word");
+                Console.WriteLine();
+                Console.WriteLine("3. Delete Word");
+                Console.WriteLine();
+                Console.WriteLine("4. Done");
+                Console.WriteLine();
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        ViewWords(path);
+                        break;
+                    case "2":
+                        Console.WriteLine();
+                        Console.WriteLine("What word do you wish to add?");
+                        Console.WriteLine();
+                        string wordToAdd = Console.ReadLine();
+                        PostWord(path, wordToAdd);
+                        break;
+                    case "3":
+                        Console.WriteLine();
+                        Console.WriteLine("What word do you wish to delete?");
+                        Console.WriteLine();
+                        string wordToDelete = Console.ReadLine();
+                        DeleteWord(path, wordToDelete);
+                        break;
+                    case "4":
+                        return;
+                    default:
+                        Console.WriteLine($"{choice} is not a valid option");
+                        break;
+                }
+            }
+        }
 
 
 
@@ -101,7 +211,10 @@ namespace WordGuessGame
             try
             {
                 string[] words = System.IO.File.ReadAllLines(path);
-                string[] newWords = new string[words.Length - 1];
+                int contains = 0;
+                for (int h = 0; h < words.Length; h++) if (words[h].Equals(word)) contains++;
+                if (contains == 0) return;
+                string[] newWords = new string[words.Length - contains];
                 for (int i = 0, j = 0; i < newWords.Length; i++)
                 {
                     if (!words[i].Equals(word))
@@ -110,6 +223,7 @@ namespace WordGuessGame
                         j++;
                     }
                 }
+                if (!words[newWords.Length].Equals(newWords[newWords.Length - 1]))
                 System.IO.File.WriteAllLines(path, newWords);
             }
             catch (Exception e)
